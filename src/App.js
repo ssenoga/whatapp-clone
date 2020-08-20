@@ -1,11 +1,17 @@
 import React from "react";
 import "./styles.css";
+import Sidebar from "./components/Sidebar";
+import Chat from "./components/Chat";
 
 export default function App() {
   return (
     <div className="App">
-      <h1>Hello CodeSandbox</h1>
-      <h2>Start editing to see some magic happen!</h2>
+      <div className="app__body">
+        {/* sidebar */}
+        <Sidebar />
+        {/* chat body */}
+        <Chat />
+      </div>
     </div>
   );
 }
