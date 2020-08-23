@@ -10,7 +10,10 @@
   background: #dadbd3;
   height: 100vh;
 }
-
+a {
+  text-decoration: none;
+  color: black;
+}
 .app__body {
   display: flex;
   height: 90vh;
