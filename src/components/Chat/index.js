@@ -30,7 +30,7 @@ export default function Chat() {
       db.collection("rooms")
         .doc(id)
         .collection("messages")
-        .orderBy("timestamp", "desc")
+        .orderBy("timestamp", "asc")
         .onSnapshot((snapShot) =>
           setMessages(snapShot.docs.map((doc) => doc.data()))
         );
@@ -77,7 +77,9 @@ export default function Chat() {
             className={`chat__message ${
               name === user.displayName && "chat__reciever"
             }`}>
-            <span className="chat__name">{name}</span>
+            {name === user.displayName ? null : (
+              <span className="chat__name">{name}</span>
+            )}
             {message}
             <span className="chat__timestamp">
               {new Date(timestamp?.toDate()).toUTCString()}
