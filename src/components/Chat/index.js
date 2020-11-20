@@ -47,61 +47,65 @@ export default function Chat() {
     setMessage("");
   };
   return (
-    <div className="chat">
-      <div className="chat__header">
-        <Avatar src={`https://avatars.dicebear.com/api/human/${id}.svg`} />
-        <div className="chat__headerInfo">
-          <h3>{roomName}</h3>
-          <p>
-            {new Date(
-              messages[messages.length - 1]?.timestamp?.toDate()
-            ).toUTCString()}
-          </p>
-        </div>
+    <>
+      {roomName === "" ? null : (
+        <div className="chat">
+          <div className="chat__header">
+            <Avatar src={`https://avatars.dicebear.com/api/human/${id}.svg`} />
+            <div className="chat__headerInfo">
+              <h3>{roomName}</h3>
+              <p>
+                {new Date(
+                  messages[messages.length - 1]?.timestamp?.toDate()
+                ).toUTCString()}
+              </p>
+            </div>
 
-        <div className="chat__headerRight">
-          <IconButton>
-            <AttachFileIcon />
-          </IconButton>
-          <IconButton>
-            <MoreVertIcon />
-          </IconButton>
-          <IconButton>
-            <SearchOutlined />
-          </IconButton>
+            <div className="chat__headerRight">
+              <IconButton>
+                <AttachFileIcon />
+              </IconButton>
+              <IconButton>
+                <MoreVertIcon />
+              </IconButton>
+              <IconButton>
+                <SearchOutlined />
+              </IconButton>
+            </div>
+          </div>
+          <div className="chat__body">
+            {messages?.map(({ name, message, timestamp = Date() }) => (
+              <p
+                className={`chat__message ${
+                  name === user.displayName && "chat__reciever"
+                }`}>
+                {name === user.displayName ? null : (
+                  <span className="chat__name">{name}</span>
+                )}
+                {message}
+                <span className="chat__timestamp">
+                  {new Date(timestamp?.toDate()).toUTCString()}
+                </span>
+              </p>
+            ))}
+          </div>
+          <div className="chat__footer">
+            <InsertEmoticonIcon />
+            <form>
+              <input
+                type="text"
+                placeholder="Type amessage.."
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+              />
+              <button onClick={sendMessage} type="submit">
+                Send Message
+              </button>
+            </form>
+            <MicIcon />
+          </div>
         </div>
-      </div>
-      <div className="chat__body">
-        {messages?.map(({ name, message, timestamp = Date() }) => (
-          <p
-            className={`chat__message ${
-              name === user.displayName && "chat__reciever"
-            }`}>
-            {name === user.displayName ? null : (
-              <span className="chat__name">{name}</span>
-            )}
-            {message}
-            <span className="chat__timestamp">
-              {new Date(timestamp?.toDate()).toUTCString()}
-            </span>
-          </p>
-        ))}
-      </div>
-      <div className="chat__footer">
-        <InsertEmoticonIcon />
-        <form>
-          <input
-            type="text"
-            placeholder="Type amessage.."
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-          />
-          <button onClick={sendMessage} type="submit">
-            Send Message
-          </button>
-        </form>
-        <MicIcon />
-      </div>
-    </div>
+      )}
+    </>
   );
 }
